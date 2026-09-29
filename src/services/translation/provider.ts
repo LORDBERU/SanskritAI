@@ -6,7 +6,7 @@ export interface TranslationProvider {
 
 export class APITranslationProvider implements TranslationProvider {
   async translateSanskrit(text: string): Promise<TranslationResult> {
-    const apiUrl = process.env.ML_API_URL || 'http://localhost:10001/translate';
+    const apiUrl = process.env.ML_API_URL || 'https://sanskritai.onrender.com/translate';
     const apiKey = process.env.MODEL_API_KEY || 'your_api_key_here';
     
     const response = await fetch(apiUrl, {
@@ -159,11 +159,6 @@ export class MockTranslationProvider implements TranslationProvider {
 
 // Factory to get the translation provider
 export function getTranslationProvider(): TranslationProvider {
-  const providerType = process.env.TRANSLATION_PROVIDER || 'mock';
-  
-  if (providerType === 'api') {
-    return new APITranslationProvider();
-  }
-  
-  return new MockTranslationProvider();
+  // Hardcoded to ALWAYS use the live Render API
+  return new APITranslationProvider();
 }
